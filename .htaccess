@@ -1,0 +1,46 @@
+#<IfModule mod_rewrite.c>
+#  RewriteEngine On
+#  RewriteCond %{HTTP_USER_AGENT} "android|blackberry|googlebot-mobile|iemobile|ipad|iphone|ipod|opera mobile|palmos|webos" [NC]
+#  RewriteRule ^$ https://www.iservefinancial.com/mobile/ [L,R=302]
+#</IfModule>
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  # !IMPORTANT! Set your RewriteBase here and don't forget trailing and leading
+  #  slashes.
+  # If your page resides at
+  #  http://www.example.com/mypage/test1
+  # then use
+  # RewriteBase /mypage/test1/
+  #RewriteCond %{HTTP_HOST} ^iservefinancial.com/$
+  #RewriteRule ^(.*)$ https://www.iservefinancial.com/$1 [R=301,L]
+  RewriteCond %{HTTP_HOST} ^[^.]+\.[^.]+$
+  RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [L,R=301]
+  RewriteBase /searchassignment/
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^(.*)$ index.php?/$1 [L]
+</IfModule>
+<IfModule !mod_rewrite.c>
+  ErrorDocument 404 /MyError
+</IfModule>
+## EXPIRES CACHING ##
+<IfModule mod_expires.c>
+ExpiresActive On
+ExpiresByType image/jpg "access plus 2 hour"
+ExpiresByType image/jpeg "access plus 2 hour"
+ExpiresByType image/gif "access plus 2 hour"
+ExpiresByType image/png "access plus 2 hour"
+ExpiresByType text/css "access plus 2 hour"
+ExpiresByType text/html "access plus 2 hour"
+ExpiresByType application/pdf "access plus 2 hour"
+ExpiresByType text/x-javascript "access plus 2 hour"
+ExpiresByType application/x-shockwave-flash "access plus 2 hour"
+ExpiresByType image/x-icon "access plus 2 hour"
+ExpiresDefault "access plus 2 hour"
+</IfModule>
+## EXPIRES CACHING ##
+# 1 Month for most static assets
+<filesMatch ".(css|jpg|jpeg|png|gif|js|ico|ttf|otf|eot|woff|json|html)$">
+Header set Cache-Control "max-age=2592000, public"
+</filesMatch>
+
